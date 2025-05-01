@@ -16,4 +16,8 @@ class PointRepository @Inject constructor(
     suspend fun insertPoint(point: PointEntity) = dao.insert(point)
 
     fun getAllPoints(): Flow<List<PointEntity>> = dao.getAllPoints()
+
+    fun getFavoritePoints(): Flow<List<PointEntity>> {
+        return dao.getFavoritePoints()
+    }
 }

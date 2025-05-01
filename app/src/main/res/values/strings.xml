@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">MapBoxProject</string>
+    <string name="add_point_title">Añadir punto</string>
+    <string name="save_point_title">¿Quieres guardar este punto como favorito?</string>
+    <string name="name_point">Nombre del punto</string>
+
+    <string name="type_red">red</string>
+    <string name="type_blue">blue</string>
+    <string name="text_blue">Alerta Azul</string>
+    <string name="text_red">Marcador rojo</string>
+    <string name="type_select">Seleccionar tipo</string>
+
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="puntos_favoritos">Puntos favoritos</string>
+    <string name="no_hay_puntos_guardados">No hay puntos guardados.</string>
+    <string name="name">Nombre: %1$s</string>
+    <string name="type">Tipo: %1$s</string>
+    <string name="see">Ver</string>
+    <string name="gif_animated">GIF animado</string>
+    <string name="loading_points">Cargando puntos...</string>
+    <string name="title_app">Mapas con mapbox</string>
+    <string name="done_by">Hecho por Valeria Henao</string>
+    <string name="go_to_map">Ir al mapa</string>
 </resources>

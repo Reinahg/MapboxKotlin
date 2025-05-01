@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.AsyncImage
@@ -25,7 +26,7 @@ fun GifEarth(modifier: Modifier) {
             .data(R.drawable.earth)
             .build(),
         imageLoader = imageLoader,
-        contentDescription = "GIF animado",
+        contentDescription = stringResource(R.string.gif_animated),
         modifier = modifier.size(200.dp)
     )
 }

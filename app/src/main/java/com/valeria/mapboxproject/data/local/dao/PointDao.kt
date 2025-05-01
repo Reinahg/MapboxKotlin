@@ -18,4 +18,7 @@ interface PointDao {
 
     @Query("SELECT * FROM points WHERE id = :id")
     suspend fun getPointById(id: Int): PointEntity?
+
+    @Query("SELECT * FROM points WHERE isFavorite = 1 ORDER BY name ASC")
+    fun getFavoritePoints(): Flow<List<PointEntity>>
 }

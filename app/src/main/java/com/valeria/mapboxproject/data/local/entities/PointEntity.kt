@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey
 data class PointEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-    val adm0name: String = "",
-    val adm1name: String = "",
     val latitude: Double,
     val longitude: Double,
     val popMax: Int = 0,

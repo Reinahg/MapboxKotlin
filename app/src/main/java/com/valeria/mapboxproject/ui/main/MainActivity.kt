@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
@@ -21,14 +20,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var permissionsManager: PermissionsManager
-
-
+    private var loadingDialog: AlertDialog? = null
+    private val viewModel: MapViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel: MapViewModel = hiltViewModel()
-
             LaunchedEffect(Unit) {
                 viewModel.fetchGeoJsonWithLoading()
 
@@ -37,13 +34,15 @@ class MainActivity : ComponentActivity() {
                         viewModel.geoJsonState.collect { state ->
                             when (state) {
                                 is GeoJsonUiState.Loading -> {
-                                    println("Cargando...")
+                                    showLoadingDialog()
                                 }
                                 is GeoJsonUiState.Success -> {
-                                    println("Datos cargados: ${state.data}")
+                                    hideLoadingDialog()
+                                    println("Datos cargados")
                                 }
                                 is GeoJsonUiState.Error -> {
-                                    println("Error: ${state.message}")
+                                    hideLoadingDialog()
+                                    showErrorDialog(state.message)
                                 }
                                 GeoJsonUiState.Idle -> Unit
                             }
@@ -59,7 +58,30 @@ class MainActivity : ComponentActivity() {
         askPermissionForLocation()
     }
 
+    private fun showLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = AlertDialog.Builder(this)
+                .setTitle("Cargando")
+                .setMessage("Por favor, espera mientras cargamos los datos...")
+                .setCancelable(false)
+                .create()
+        }
+        loadingDialog?.show()
+    }
 
+    private fun hideLoadingDialog() {
+        loadingDialog?.dismiss()
+        loadingDialog = null
+    }
+
+    private fun showErrorDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("Error al cargar datos")
+            .setMessage(message)
+            .setCancelable(false)
+            .setPositiveButton("Aceptar") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
 
     private fun askPermissionForLocation(){
         var permissionsListener: PermissionsListener = object : PermissionsListener {
